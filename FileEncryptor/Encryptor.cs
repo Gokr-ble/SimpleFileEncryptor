@@ -39,15 +39,15 @@ namespace FileEncryptor
             return resultArray;
         }
 
-        public string KeyGen()
+        public string KeyGenerate(string key)
         {
-            string key = "";
-            for (int i = 0; i < 32; i++)
+            int len = key.Length;
+            for (int i = 0; i < 32-len; i++)
             {
                 key += "1";
             }
-
             return key;
         }
+
     }
 }
