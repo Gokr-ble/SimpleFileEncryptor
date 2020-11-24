@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encryptor.cs" />
+    <Compile Include="FileOperator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
