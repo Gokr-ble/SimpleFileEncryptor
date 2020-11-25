@@ -10,17 +10,29 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.IO;
 using System.Timers;
+using System.Security.Principal;
+using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace FileEncryptor
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private Encryptor encryptor = new Encryptor();
         
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-        }              
+        }
+        
+        public MainForm(string[] args)
+        {
+            InitializeComponent();
+            if (args.Length > 0)
+            {
+                SrcFileTextBox.Text = args[0];
+            }
+        }
 
         private void EncFileBtn_Click(object sender, EventArgs e)
         {
@@ -106,6 +118,39 @@ namespace FileEncryptor
         private void WrongPasswordMessage()
         {
             MessageBox.Show("密码错误！", "Error");
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            RegistryKey rkClassRoot = Registry.ClassesRoot;
+            if (rkClassRoot.OpenSubKey(".myenc") == null)
+            {
+                if (MessageBox.Show("文件类型未关联，是否建立文件关联？", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    RunElevated(Application.ExecutablePath);
+                    this.Close();
+                }
+            }
+        }
+
+        private void RunElevated(string fileName)
+        {
+            ProcessStartInfo processInfo = new ProcessStartInfo();
+            processInfo.Verb = "runas";
+            processInfo.FileName = fileName;
+            try
+            {
+                Process.Start(processInfo);
+                Registry.SetValue(@"HKEY_CLASSES_ROOT\.myenc", "", "MyencFile");
+                Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile", "", "myenc加密文件");
+                Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile\DefaultIcon", "", @"E:\ProgramIcon\folder_key.ico");
+                Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile\shell\open\command", "", "E:\\myenc\\myenc.exe \"%1\"");
+                MessageBox.Show("文件关联成功！", "确认");
+            }
+            catch (Win32Exception)
+            {
+                MessageBox.Show("文件关联已终止。", "确认");
+            }
         }
     }
 }
