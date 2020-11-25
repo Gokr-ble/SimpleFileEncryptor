@@ -128,7 +128,19 @@ namespace FileEncryptor
                 if (MessageBox.Show("文件类型未关联，是否建立文件关联？", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     RunElevated(Application.ExecutablePath);
-                    this.Close();
+                    rkClassRoot.Close();
+
+                    WindowsIdentity identity = WindowsIdentity.GetCurrent();
+                    WindowsPrincipal principal = new WindowsPrincipal(identity);
+                    if (principal.IsInRole(WindowsBuiltInRole.Administrator))
+                    {
+                        Registry.SetValue(@"HKEY_CLASSES_ROOT\.myenc", "", "MyencFile");
+                        Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile", "", "myenc加密文件");
+                        Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile\DefaultIcon", "", @"C:\Program Files\FileEncryptor\folder_key.ico");
+                        Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile\shell\open\command", "", "C:\\Program Files\\FileEncryptor\\FileEncryptor.exe \"%1\"");
+                        MessageBox.Show("文件关联成功！", "确认");
+                    }                    
+                    this.Close();                                       
                 }
             }
         }
@@ -141,15 +153,10 @@ namespace FileEncryptor
             try
             {
                 Process.Start(processInfo);
-                Registry.SetValue(@"HKEY_CLASSES_ROOT\.myenc", "", "MyencFile");
-                Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile", "", "myenc加密文件");
-                Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile\DefaultIcon", "", @"E:\ProgramIcon\folder_key.ico");
-                Registry.SetValue(@"HKEY_CLASSES_ROOT\MyencFile\shell\open\command", "", "E:\\myenc\\myenc.exe \"%1\"");
-                MessageBox.Show("文件关联成功！", "确认");
             }
             catch (Win32Exception)
             {
-                MessageBox.Show("文件关联已终止。", "确认");
+                MessageBox.Show("文件关联已终止，但软件仍可使用。", "确认");
             }
         }
     }

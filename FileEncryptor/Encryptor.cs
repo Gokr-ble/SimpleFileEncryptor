@@ -13,10 +13,12 @@ namespace FileEncryptor
         {
             byte[] keyArray = Encoding.UTF8.GetBytes(key);
 
-            RijndaelManaged rDel = new RijndaelManaged();
-            rDel.Key = keyArray;
-            rDel.Mode = CipherMode.ECB;
-            rDel.Padding = PaddingMode.None;
+            RijndaelManaged rDel = new RijndaelManaged
+            {
+                Key = keyArray,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.None
+            };
 
             ICryptoTransform cTransform = rDel.CreateEncryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(array, 0, array.Length);
