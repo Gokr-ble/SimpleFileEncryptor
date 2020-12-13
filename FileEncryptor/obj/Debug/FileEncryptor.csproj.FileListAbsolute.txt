@@ -1,10 +1,10 @@
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\bin\Debug\FileEncryptor.exe.config
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\bin\Debug\FileEncryptor.exe
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\bin\Debug\FileEncryptor.pdb
-C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.csprojAssemblyReference.cache
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.Properties.Resources.resources
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.csproj.GenerateResource.cache
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.csproj.CoreCompileInputs.cache
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.exe
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.pdb
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.MainForm.resources
+C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.csprojAssemblyReference.cache

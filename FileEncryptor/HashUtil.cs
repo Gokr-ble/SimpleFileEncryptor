@@ -12,7 +12,7 @@ namespace FileEncryptor
         public string SHA256Encrypt(string data)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(data);
-            byte[] hash = SHA256Managed.Create().ComputeHash(bytes);
+            byte[] hash = SHA256.Create().ComputeHash(bytes);
 
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < hash.Length; i++)

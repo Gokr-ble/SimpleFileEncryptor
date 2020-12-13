@@ -13,13 +13,12 @@ using System.Timers;
 using System.Security.Principal;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Threading;
 
 namespace FileEncryptor
 {
     public partial class MainForm : Form
     {
-        private Encryptor encryptor = new Encryptor();
-        
         public MainForm()
         {
             InitializeComponent();
@@ -44,16 +43,22 @@ namespace FileEncryptor
             {
                 MessageBox.Show("请选择正确的文件路径！", "错误", MessageBoxButtons.OK);
             }
+            else if(userKey == "")
+            {
+                MessageBox.Show("请输入密码！", "错误", MessageBoxButtons.OK);
+            }
             else
             {
-                FileOperator foperator = new FileOperator();
+                FileOperator foperator = new FileOperator(path, userKey);
                 ProgressBarInit((int)new FileInfo(path).Length, 1024);
+
                 foperator.UpdateUIDelegate += startProgress;
                 foperator.CallBackDelegate += ShowMessage;
                 foperator.wrongPassword += WrongPasswordMessage;
-                foperator.EncryptFile(path, userKey);
+                foperator.EncryptFile();
+                
             }
-            
+    
         }
 
         private void DecFileBtn_Click(object sender, EventArgs e)
@@ -65,14 +70,18 @@ namespace FileEncryptor
             {
                 MessageBox.Show("请选择正确的文件路径！", "错误", MessageBoxButtons.OK);
             }
+            else if (userKey == "")
+            {
+                MessageBox.Show("请输入密码！", "错误", MessageBoxButtons.OK);
+            }
             else
             {
-                FileOperator foperator = new FileOperator();
+                FileOperator foperator = new FileOperator(path, userKey);
                 ProgressBarInit((int)new FileInfo(path).Length, 1024);
                 foperator.UpdateUIDelegate += startProgress;
                 foperator.CallBackDelegate += ShowMessage;
                 foperator.wrongPassword += WrongPasswordMessage;
-                foperator.DecryptFile(path, userKey);
+                foperator.DecryptFile();
             }
             
         }
@@ -101,6 +110,10 @@ namespace FileEncryptor
         private void startProgress()
         {
             progressBar1.PerformStep();
+            //progressBar1.BeginInvoke(new EventHandler((sender, e) =>
+            //{
+            //    progressBar1.PerformStep();
+            //}), null);
         }
 
         private void ShowMessage(string savePath, int type)
@@ -158,6 +171,17 @@ namespace FileEncryptor
             {
                 MessageBox.Show("文件关联已终止，但软件仍可使用。", "确认");
             }
+        }
+    }
+
+    public class FileParamPair
+    {
+        public string filePath;
+        public string userKey;
+        public FileParamPair(string p, string k)
+        {
+            filePath = p;
+            userKey = k;
         }
     }
 }

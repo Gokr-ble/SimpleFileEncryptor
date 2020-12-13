@@ -9,29 +9,29 @@ namespace FileEncryptor
 {
     class Encryptor
     {
-        public byte[] Encrypt(byte[] array, string key)
+        public byte[] Encrypt(byte[] array, byte[] key)
         {
-            byte[] keyArray = Encoding.UTF8.GetBytes(key);
+            //byte[] keyArray = Encoding.UTF8.GetBytes(key);
 
             RijndaelManaged rDel = new RijndaelManaged
             {
-                Key = keyArray,
+                Key = key,
                 Mode = CipherMode.ECB,
                 Padding = PaddingMode.None
             };
 
             ICryptoTransform cTransform = rDel.CreateEncryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(array, 0, array.Length);
-
             return resultArray;
+
         }
 
-        public byte[] Decrypt(byte[] array, string key)
+        public byte[] Decrypt(byte[] array, byte[] key)
         {
-            byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
+            //byte[] keyArray = Encoding.UTF8.GetBytes(key);
 
             RijndaelManaged rDel = new RijndaelManaged();
-            rDel.Key = keyArray;
+            rDel.Key = key;
             rDel.Mode = CipherMode.ECB;
             rDel.Padding = PaddingMode.None;
 
@@ -41,14 +41,10 @@ namespace FileEncryptor
             return resultArray;
         }
 
-        public string KeyGenerate(string key)
+        public byte[] KeyGenerate(string key)
         {
-            int len = key.Length;
-            for (int i = 0; i < 32-len; i++)
-            {
-                key += "1";
-            }
-            return key;
+            byte[] keyArray = new HashUtil().MD5Encrypt(key);
+            return keyArray;
         }
 
     }
