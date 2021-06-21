@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
+using System.Diagnostics;
 
 namespace FileEncryptor
 {
@@ -52,6 +53,9 @@ namespace FileEncryptor
             //写入密钥Hash值
             outputFile.Write(keyBytes, 0, 16);
 
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             while (true)
             {
                 int len = inputFile.Read(buf, 0, buf.Length);
@@ -68,6 +72,10 @@ namespace FileEncryptor
             }
             inputFile.Close();
             outputFile.Close();
+
+            sw.Stop();
+            System.Windows.Forms.MessageBox.Show(sw.ElapsedMilliseconds.ToString());
+            // Console.WriteLine(sw.ElapsedMilliseconds);
 
             CallBackDelegate(pathTarget, 0);
         }

@@ -7,4 +7,4 @@ C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.exe
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.pdb
 C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.MainForm.resources
-C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.csprojAssemblyReference.cache
+C:\Users\luans\source\repos\FileEncryptor\FileEncryptor\obj\Debug\FileEncryptor.csproj.AssemblyReference.cache

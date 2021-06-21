@@ -55,8 +55,8 @@ namespace FileEncryptor
                 foperator.UpdateUIDelegate += startProgress;
                 foperator.CallBackDelegate += ShowMessage;
                 foperator.wrongPassword += WrongPasswordMessage;
+
                 foperator.EncryptFile();
-                
             }
     
         }
